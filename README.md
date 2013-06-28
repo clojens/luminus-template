@@ -1,6 +1,6 @@
 # Luminus-Template
 
-A Leiningen template for projects using [Luminus](http://www.luminusweb.net/). 
+A Leiningen template for projects using [Luminus](http://www.luminusweb.net/).
 
 The template initializes a base Luminus application.
 
@@ -40,15 +40,27 @@ You can also mix multiple profiles when creating the application, e.g.:
 lein new luminus myapp +site +postgres
 ```
 
-To build as a executable [Java ARchive (JAR)][jar] standalone, run the following command:
+To start the application ring server use:
+
+```bash
+lein ring server
+```
+
+However, should you have installed using the `+http-kit` profile,
+you need to use the following instead:
+
+```bash
+lein run
+```
+
+To build as a executable [Java ARchive (JAR)][jar] standalone, using
+either the ring server or http-kit, run the following command:
 
 ```bash
 lein ring uberjar
 ```
 
-You'll be able to run the 
-
-To run the resulting standalone executable `.jar` file, do as you would with any other:
+To run the standalone executable `.jar` file, do as you would with any other using the `java` command:
 
 ```bash
 user$ java -jar target/myapp-0.1.0-SNAPSHOT-standalone.jar
