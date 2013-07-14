@@ -2,29 +2,35 @@
 
 A Leiningen template for projects using [Luminus](http://www.luminusweb.net/).
 
-The template initializes a base Luminus application.
+The template initializes a base Luminus web application from scratch, optionally
+using extensions for additional pluggable functionality.
 
 ## Requirements
 
-Luminus requires Leiningen version 2.x
+Luminus requires Clojure build-automation tool [Leiningen][lein] version 2.x
+
+Luminus requires a internet connection so it may have Maven2 download any missing
+software referenced in your project/profiles.
 
 ## Usage
 
-### Precautions
-
-The Luminus template ships out of the box with the latest [Leiningen][l2] build
+The Luminus template ships out of the box with the latest [Leiningen][lein] build
 tool for Clojure. Make sure to have it properly installed and that your
-references are up-to-date. You may find Linux/OSX/Windows instructions on how
-to setup leiningen [here][l2s].
+references are up-to-date. Check the bottom of this document for help with any
+troubleshooting.
+
+You may find Linux/OSX/Windows instructions on how to setup leiningen [here][install].
 
 ### Create a new Luminus project
 
-Use the `lein new` command as you normally would, from your virtual terminal
-emulator (or PowerShell) command line interface, to create a new default luminus
-project from template as follow:
+After successful installation of the leiningen tool and having the command made
+available on your `PATH`, you can use the `lein new` command as you normally
+would, from your virtual terminal emulator (or PowerShell) command line
+interface. For example, to create a new default luminus project type the
+following in your shell:
 
 ```bash
-lein new luminus *<your project name goes here>
+lein new luminus <your project name goes here>
 ```
 
 ### Available plugins for Luminus
@@ -201,9 +207,11 @@ Copyright © 2012 Yogthos
 
 Distributed under the Eclipse Public License, the same as Clojure.
 
+[lein]: <https://github.com/technomancy/leiningen>
 [ph]: <http://www.luminusweb.net/docs/profiles.md>
 [tbs]: <http://twitter.github.io/bootstrap/>
 [cljs]: <https://github.com/clojure/clojurescript>
+[m2]: <http://maven.apache.org/>
 [h2]: <http://www.h2database.com/html/main.html>
 [pg]: <http://www.postgresql.org/>
 [my]: <https://mariadb.org/>
