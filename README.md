@@ -1,16 +1,17 @@
 # Luminus-Template
 
-A Leiningen template for projects using [Luminus](http://www.luminusweb.net/).
+A Leiningen template for bootstrapping web application projects using the
+[Luminus](http://www.luminusweb.net/) framework.
 
-The template initializes a base Luminus web application from scratch, optionally
-using extensions for additional pluggable functionality.
+This template initializes a base Luminus web application from scratch, optionally
+using extensions for additional pluggable functionality, through use of `lein new`
+command arguments.
 
 ## Requirements
 
 Luminus requires Clojure build-automation tool [Leiningen][lein] version 2.x
 
-Luminus requires a internet connection so it may have Maven2 download any missing
-software referenced in your project/profiles.
+Luminus requires a working internet connection to be able and download referenced software not yet installed locally.
 
 ## Usage
 
@@ -144,7 +145,7 @@ So please make sure something is a luminus problem before you submit a bugreport
 You may find a this [leiningen sample project definition][exproj] file useful
 as a reference to the available configuration options.
 
-### Precautions
+### Troubleshooting (precautions)
 
 Usage of Leiningen versions below 2.0 or software depending on older Clojure
 versions (below ~ 1.4.1) will probably result in partial or complete
@@ -156,11 +157,13 @@ Clojure, Leiningen and Luminus release versions.
 You can use the [lein-ancient][ancien] plugin to check if there are newer
 versions of Clojure projects. This will apply to all projects in the dependency
 tree, including those defined in any currently active lein profiles e.g.
-`~/.lein/profiles.clj` but possibly elsewhere as well.
+`~/.lein/profiles.clj` but possibly elsewhere as well. This is impossible for us
+to tell, since the system allows for arbitrary profiles being loaded from
+non-standardized locations.
 
 The `lein ancient` command will only function properly inside a project folder,
 so first bootstrap the new luminus project as outlined above, next `cd` into
-that created directory. Only then use the command `lein ancient` as illustrated
+that created directory. Only then use the command as illustrated
 in the example below:
 
 ```bash
@@ -176,30 +179,30 @@ Generating a lovely new Luminus project named foobarr...
 [ring/ring-devel "1.2.0"] is available but we use "1.1.8"
 ```
 
-Finally, you may use that list to edit either the `project.clj` file, the
+Use this list to manually edit either the `project.clj` file, the
 global user profile `~/.lein/profiles.clj` or any other file with profiles,
-depending on where you've kept these. Sadly, at time of this write-up,i the
-plugin doesn't tell you where to find that reference, nor is there is
-automation of the update process in Clojure/Leiningen so fire up your favorite
-editor and manually track them down, updating the numbers to reflect the
-correct version. So again, should you not be able to find in the project,
-chances are you will find it in profile. Use `grep -irn 'search terms'` if you
-really can't find it.
+depending on where you've kept these. Sadly, at time of this write-up, the
+plugin doesn't tell you where to find that reference and since the filenames
+could be located elsewhere, you'll have to do a little digging yourself.
+
+There is no automated dependency update process for Leiningen, as there is with
+say Node.js packages. So for now, the user is responsible for maintaining the
+currency of the project in terms of proper versioning of references.
 
 Finally, although luminus does the heavy lifting in terms of bootstrapping the
 (boilerplate) code and dependency injections, you may always want to manually
-check the project tree itself. Firstly, by using the shell command `lein
-deps-tree`, you will automatically pull in any dependencies from that project
-which you do not have in your local Maven2 repository `~/.m2/repository/`.
-Secondly, running the command will parse the tree and probably, if lein ancient
-succeeded, not throw you any errors besides the expected 'missing local
-software' notifications, which it will begin downloading immediately. Most
-importantly though, you need to remember that there can be conflicts between
-libraries and their dependencies, that do not result in any (observable)
-malfunctioning per se, but still remain desirable to gracefully be solved
-(excluded or by other means). Pay extra attention to the top of the tree, since
-it is there where the messages will be printed should there be issues.
+check the project tree itself using the `lein deps-tree` command you will:
 
+1. complain if it can't find a certain software package locally and tries to
+1. automatically pull in any missing software referenced in projects/profiles
+1. parse the entire dependency tree and print it in the terminal window
+
+If there are any errors in the project files, it may print a stack-dump as well.
+
+Note that in case of conflicting libraries it will show which ones are the perps,
+but as of yet, not how to fix it. Since these conflicts do not always produce
+any observable (side-)effects, this becomes a very useful tool in early spotting
+and prevention of potential problems.
 
 ## License
 
