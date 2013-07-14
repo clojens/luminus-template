@@ -64,7 +64,7 @@
                     ['org.clojure/clojurescript "0.0-1806"]
                     ['domina "1.0.1"]
                     ['prismatic/dommy "0.1.1"]
-                    ['cljs-ajax "0.1.4"])
+                    ['cljs-ajax "0.1.5"])
   (add-plugins project-file ['lein-cljsbuild "0.3.2"])
   (add-to-project
    project-file
@@ -100,7 +100,7 @@
   [["src//{{sanitized}}/core.clj"  (*render* "core.clj")]])
 
 (defmethod post-process :+http-kit [_ project-file]
-  (add-dependencies project-file ['http-kit "2.1.4"])
+  (add-dependencies project-file ['http-kit "2.1.6"])
   (add-to-project project-file :main (symbol (str *name* ".core"))))
 
 (defn site-required-features []
