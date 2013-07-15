@@ -197,12 +197,56 @@ check the project tree itself using the `lein deps-tree` command you will:
 1. automatically pull in any missing software referenced in projects/profiles
 1. parse the entire dependency tree and print it in the terminal window
 
-If there are any errors in the project files, it may print a stack-dump as well.
+The whole terminal output printed might resemble something like the following:
 
-Note that in case of conflicting libraries it will show which ones are the perps,
-but as of yet, not how to fix it. Since these conflicts do not always produce
-any observable (side-)effects, this becomes a very useful tool in early spotting
-and prevention of potential problems.
+```bash
+Retrieving org/clojure/clojurescript/0.0-1835/clojurescript-0.0-1835.pom (7k)
+    from http://repo1.maven.org/maven2/
+Retrieving com/google/javascript/closure-compiler/v20130603/closure-compiler-v20130603.pom (4k)
+    from http://repo1.maven.org/maven2/
+Retrieving com/google/javascript/closure-compiler/v20130603/closure-compiler-v20130603.jar (3475k)
+    from http://repo1.maven.org/maven2/
+Retrieving org/clojure/clojurescript/0.0-1835/clojurescript-0.0-1835.jar (131k)
+    from http://repo1.maven.org/maven2/
+[clabango "0.5"]
+    [commons-codec "1.6"]
+    [joda-time "2.1"]
+[clj-stacktrace "0.2.6"]
+[clj-tagsoup "0.3.0"]
+    [net.java.dev.stax-utils/stax-utils "20040917"]
+    [org.clojars.nathell/tagsoup "1.2.1"]
+    [org.clojure/data.xml "0.0.3"]
+
+    ...
+```
+
+If there are any errors in the project files, it may print a stack-dump as
+well, the output of which may resemble something along these lines which were
+printed because I changed the version of the `ring-server` dependency to a
+version number (suffix a) not found in my local m2 repository, so lein went to
+look online and couldn't find it either. Because we didn't provide a custom
+repository location in the project, it's impossible to locate this dependency
+and the entire project fails:
+
+```bash
+[user ~]$ lein deps-tree                                                                                                                                                    develop-!?
+Could not find artifact ring-server:ring-server:pom:0.2.8a in central (http://repo1.maven.org/maven2/)
+Could not find artifact ring-server:ring-server:pom:0.2.8a in clojars (https://clojars.org/repo/)
+Could not find artifact ring-server:ring-server:jar:0.2.8a in central (http://repo1.maven.org/maven2/)
+Could not find artifact ring-server:ring-server:jar:0.2.8a in clojars (https://clojars.org/repo/)
+org.sonatype.aether.resolution.DependencyResolutionException: Could not find artifact ring-server:ring-server:jar:0.2.8a in central (http://repo1.maven.org/maven2/)
+    at org.sonatype.aether.impl.internal.DefaultRepositorySystem.resolveDependencies(DefaultRepositorySystem.java:375)
+    at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+    at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+    at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+    at java.lang.reflect.Method.invoke(Method.java:606)
+    ...
+```
+
+Note that in case of conflicting libraries it will show which ones are the
+perps, but as of yet, not how to fix it. Since these conflicts do not always
+produce any observable (side-)effects, this becomes a very useful tool in early
+spotting and prevention of potential problems.
 
 ## License
 
